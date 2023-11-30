@@ -3,6 +3,7 @@ import { CustomButton, FormInput, ReactDiv } from "../shared/components"
 import ReactLoading from 'react-loading';
 import { ApiCarModels } from "../shared/services/api/models/ApiCarModels";
 import { CarDataType } from "../shared/types/CarDataType";
+import { ApiException } from "../shared/services/api/ApiException";
 
 export const CarData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -13,15 +14,19 @@ export const CarData = () => {
 
   const retriveData = async () => {
     const data = await ApiCarModels.getAll() as CarDataType[];
+    if (data instanceof ApiException) {
+      alert(data.message);
+      return;
+    }
     setDataInfo(data as CarDataType[]);
     setIsLoading(false)
   }
-  const SearchData = useCallback(async() => {
+  const SearchData = useCallback(async () => {
     setIsLoading(true)
-    const data = await ApiCarModels.getAll(marca,modelo,limit) as CarDataType[]
+    const data = await ApiCarModels.getAll(marca, modelo, limit) as CarDataType[]
     setDataInfo(data as CarDataType[]);
     setIsLoading(false)
-  },[marca,modelo,limit]);
+  }, [marca, modelo, limit]);
 
   useEffect(() => {
     retriveData()

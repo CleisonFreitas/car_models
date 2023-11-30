@@ -3,13 +3,14 @@ import { ReactDiv } from '..'
 type FormInputType = {
     sx: string;
     label: string;
+    placeholder: string;
     type: string;
     name: string;
     id:string;
     value:string;
     onChange?:(e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export const FormInput: React.FC<FormInputType> = ({sx,label,type,id,name,value,onChange}) => {
+export const FormInput: React.FC<FormInputType> = ({sx,label,type,id,name,value,onChange, placeholder}) => {
   return (
     <ReactDiv style={`flex flex-col md:flex-row justify-between w-full items-center px-5`}>
         <label htmlFor={id} className='font-bold capitalize'>{label}:</label>
@@ -19,6 +20,7 @@ export const FormInput: React.FC<FormInputType> = ({sx,label,type,id,name,value,
             id={id} 
             name={name} 
             value={value} 
+            placeholder={placeholder}
             onChange={onChange}/>
     </ReactDiv>
   )

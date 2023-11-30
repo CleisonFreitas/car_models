@@ -4,9 +4,8 @@ import { ApiRapidCar } from "../ApiRapidCar";
 
 const getAll = async(
     make?:string, 
-    make_id?: string, 
     model?: string, 
-    limit?: number | string, 
+    limit?: string, 
     sort?: string,
     direction?: string, 
     year?: string)
@@ -15,8 +14,7 @@ const getAll = async(
         const {data} = await ApiRapidCar().get('/models', {
             params: {
                 make: make ? make : '',
-                make_id: make_id ? make_id : '',
-                limit:limit ? limit : 1000,
+                limit:limit ? limit : '1000',
                 model: model ? model : '',
                 sort: sort ? sort :'id',
                 direction: direction ? direction : 'asc',

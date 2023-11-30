@@ -9,8 +9,7 @@ export const CarData = () => {
   const [dataInfo, setDataInfo] = useState<CarDataType[]>([]);
   const [modelo, setModelo] = useState<string>('');
   const [marca, setMarca] = useState<string>('');
-  const [marcaId, setMarcaId] = useState<string>('');
-  const [limit, setLimit] = useState<number | string>();
+  const [limit, setLimit] = useState<string>('');
 
   const retriveData = async () => {
     const data = await ApiCarModels.getAll() as CarDataType[];
@@ -19,10 +18,10 @@ export const CarData = () => {
   }
   const SearchData = useCallback(async() => {
     setIsLoading(true)
-    const data = await ApiCarModels.getAll(marca,marcaId,modelo,limit) as CarDataType[]
+    const data = await ApiCarModels.getAll(marca,modelo,limit) as CarDataType[]
     setDataInfo(data as CarDataType[]);
     setIsLoading(false)
-  },[marca,marcaId,modelo,limit]);
+  },[marca,modelo,limit]);
 
   useEffect(() => {
     retriveData()
@@ -43,6 +42,7 @@ export const CarData = () => {
                 label="modelo"
                 name="modelo"
                 type="text"
+                placeholder="Ex: A5"
                 value={modelo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setModelo(e.currentTarget.value)}
               />
@@ -52,25 +52,18 @@ export const CarData = () => {
                 label="marca"
                 name="marca"
                 type="text"
+                placeholder="Ex: Audi"
                 value={marca}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMarca(e.currentTarget.value)}
               />
               <FormInput
                 sx="w-full md:w-64 h-12"
-                id="marca_id"
-                label="marca_id"
-                name="marca_id"
-                type="text"
-                value={marcaId}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMarcaId(e.currentTarget.value)}
-              />
-              <FormInput
-                sx="w-full md:w-64 h-12"
-                id="limit"
-                label="limit"
+                id="limite"
+                label="limite"
                 name="limit"
                 type="text"
-                value={limit as string}
+                placeholder="Ex: 100"
+                value={limit}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLimit(e.currentTarget.value)}
               />
               <CustomButton type="button" variant="primary" onClick={SearchData}>Consultar</CustomButton>

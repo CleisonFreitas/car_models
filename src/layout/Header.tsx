@@ -4,11 +4,13 @@ import { LuShrink } from "react-icons/lu";
 import { FaExpandArrowsAlt, FaRegUser } from "react-icons/fa";
 import { SideBarContext } from "../shared/contexts/sidebar/SideBarContext";
 import { TbMenuOrder } from "react-icons/tb";
+import { useAuth } from "../shared/contexts/auth/AuthContext";
 
 export const Header = () => {
     const context = useContext(SideBarContext);
     const [doLogout, setDoLogout] = useState<boolean>(false);
     const [hideMenu, setHideMenu] = useState<boolean>(false);
+    const auth = useAuth();
 
     const showLogout = () => {
         setDoLogout((prev) => !prev);
@@ -18,6 +20,11 @@ export const Header = () => {
     }
     const handleMenu = () => {
         setHideMenu((prev) => !prev);
+    }
+
+    const handleLogout = () => {
+        auth.logout();
+        window.location.href = '/';
     }
     return (
         <>
@@ -45,11 +52,11 @@ export const Header = () => {
                         className="p-2 rounded-full border border-white text-white flex gap-2 items-center">
                         <FaRegUser />
                     </button>
-                    <p>Cleison Freitas</p>
+                    <p>{auth.user}</p>
                 </ReactDiv>
                 {doLogout &&
                     <ReactDiv style="absolute right-1 top-12 h-14 w-40 bg-white text-black bg-opacity-30 rounded border border-gray-400 flex flex-col justify-center items-center flex-none">
-                        <span className="cursor-pointer hover:bg-blue-950 w-full text-center hover:text-white">Logout</span>
+                        <span className="cursor-pointer hover:bg-blue-950 w-full text-center hover:text-white" onClick={handleLogout}>Logout</span>
                     </ReactDiv>
                 }
             </ReactDiv>

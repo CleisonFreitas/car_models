@@ -15,8 +15,10 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<ChildrenType> = ({children}) => {
     const [isLogged, setIsLogged] = useState<boolean>(false);
+    const [user, setUser] = useState<string>('');
 
-    const login = () => {
+    const login = (name: string) => {
+        setUser(name);
         setIsLogged(true);
     };
 
@@ -28,6 +30,7 @@ export const AuthProvider: React.FC<ChildrenType> = ({children}) => {
         isLogged,
         login,
         logout,
+        user,
 
     }
     return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

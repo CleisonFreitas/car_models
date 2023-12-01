@@ -3,16 +3,28 @@ import { Header } from '../layout/Header'
 import { Main } from '../layout/Main'
 import { SideBarData } from '../shared/contexts/sidebar/SideBarContext'
 import './App.css'
+import { useAuth } from '../shared/contexts/auth/AuthContext'
+import { FormLogin } from '../shared/components'
 
 const App = () => {
+  const auth = useAuth();
 
+  
   return (
-    <SideBarData>
-      <AppContainer>
-        <Header />
-        <Main />
-      </AppContainer>
-    </SideBarData>
+    <>
+      {auth.isLogged ? (
+        <SideBarData>
+          <AppContainer>
+            <Header />
+            <Main />
+          </AppContainer>
+        </SideBarData>
+      ) : (
+        <FormLogin />
+      )}
+
+    </>
+
   )
 }
 
